@@ -1,3 +1,12 @@
+"""A few notes about the level editor:
+1. Although tile 2 from the left is hard to see, it's realistic grass and it is not solid in game.
+2. Solid tiles include dirt, platforms, brick walls, and boxes.
+3. Coins in game will be used to unlock new player abilities such as climbing, double jumping, gliding, etc. They should only be used if a new mechanic is required to finish the level.
+4. Sorry about the zoom functionality. Don't hurt your eyes in the meantime.
+5. Pressing the UP and DOWN arrows changes the level you are working on. Be mindful of overwriting other levels.
+6. Pressing 'S' will save your level, using the arrows to navigate to levels and pressing 'L' will load that level.
+7. Have fun making and testing out your levels."""
+
 import pygame
 import json
 
@@ -94,11 +103,11 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_s:
                 # Save the world data to a file
-                with open(F'world_data{level}.json', 'w') as f:
+                with open(F'levels/world_data{level}.json', 'w') as f:
                     json.dump(world_data, f)
             elif event.key == pygame.K_l:
                 # Load the world data from a file
-                with open(f'world_data{level}.json', 'r') as f:
+                with open(f'levels/world_data{level}.json', 'r') as f:
                     world_data = json.load(f)
             elif event.key == pygame.K_UP:
                 level += 1
