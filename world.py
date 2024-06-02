@@ -17,6 +17,10 @@ class World:
         blob_img = pg.image.load('assets/kenney_platformer-art-deluxe/Extra animations and enemies/Enemy sprites/spider.png')
         platform_x_img = pg.image.load('assets/kenney_platformer-art-deluxe/Base pack/Tiles/grassHalf.png')
         coin_img = pg.image.load('assets/kenney_platformer-art-deluxe/Base pack/Items/coinGold.png')
+        shroomy_img = pg.image.load('assets/kenney_platformer-art-deluxe/Mushroom expansion/PNG/tallShroom_red.png')
+        bush_img = pg.image.load('assets/kenney_platformer-art-deluxe/Mushroom expansion/PNG/bush.png')
+        brickWall_img = pg.image.load('assets/kenney_platformer-art-deluxe/Base pack/Tiles/brickWall.png')
+        box_img = pg.image.load('assets/kenney_platformer-art-deluxe/Base pack/Tiles/box.png')
 
         row_count = 0
         for row in data:
@@ -71,6 +75,38 @@ class World:
                     coin_rect.y = row_count * self.tile_size
                     coin_rect.inflate_ip(-20, -10)
                     tile = (coin, coin_rect, 6)
+                    self.tile_list.append(tile)
+                if tile == 7:
+                    shroomy = pg.transform.scale(shroomy_img, (self.tile_size, self.tile_size))
+                    shroomy_rect = shroomy.get_rect()
+                    shroomy_rect.x = column_count * self.tile_size
+                    shroomy_rect.y = row_count * self.tile_size
+                    shroomy_rect.inflate_ip(-20, -10)
+                    tile = (shroomy, shroomy_rect, 6)
+                    self.tile_list.append(tile)
+                if tile == 8:
+                    bush = pg.transform.scale(bush_img, (self.tile_size, self.tile_size))
+                    bush_rect = bush.get_rect()
+                    bush_rect.x = column_count * self.tile_size
+                    bush_rect.y = row_count * self.tile_size
+                    bush_rect.inflate_ip(-20, -10)
+                    tile = (bush, bush_rect, 6)
+                    self.tile_list.append(tile)
+                if tile == 9:
+                    brickWall = pg.transform.scale(brickWall_img, (self.tile_size, self.tile_size))
+                    brickWall_rect = brickWall.get_rect()
+                    brickWall_rect.x = column_count * self.tile_size
+                    brickWall_rect.y = row_count * self.tile_size
+                    brickWall_rect.inflate_ip(-20, -10)
+                    tile = (brickWall, brickWall_rect, 6)
+                    self.tile_list.append(tile)
+                if tile == 10:
+                    box = pg.transform.scale(box_img, (self.tile_size, self.tile_size))
+                    box_rect = box.get_rect()
+                    box_rect.x = column_count * self.tile_size
+                    box_rect.y = row_count * self.tile_size
+                    box_rect.inflate_ip(-20, -10)
+                    tile = (box, box_rect, 6)
                     self.tile_list.append(tile)
                 column_count += 1
             row_count += 1

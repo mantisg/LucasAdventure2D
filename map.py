@@ -1,4 +1,6 @@
 import json
 
-with open('world_data.json', 'r') as file:
-    world_data = json.load(file)
+def load_level(filename):
+    with open(filename, 'r') as file:
+        world_data = json.load(file)
+    return world_data

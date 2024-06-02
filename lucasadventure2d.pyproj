@@ -24,10 +24,17 @@
     <Compile Include="camera.py" />
     <Compile Include="level_editor.py" />
     <Compile Include="level_editor2.py" />
+    <Compile Include="level_select.py" />
     <Compile Include="lucasadventure2d.py" />
     <Compile Include="map.py" />
     <Compile Include="player.py" />
     <Compile Include="world.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="requirements.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="levels\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
