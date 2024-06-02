@@ -82,7 +82,7 @@ class World:
                     shroomy_rect.x = column_count * self.tile_size
                     shroomy_rect.y = row_count * self.tile_size
                     shroomy_rect.inflate_ip(-20, -10)
-                    tile = (shroomy, shroomy_rect, 6)
+                    tile = (shroomy, shroomy_rect, 7)
                     self.tile_list.append(tile)
                 if tile == 8:
                     bush = pg.transform.scale(bush_img, (self.tile_size, self.tile_size))
@@ -90,7 +90,7 @@ class World:
                     bush_rect.x = column_count * self.tile_size
                     bush_rect.y = row_count * self.tile_size
                     bush_rect.inflate_ip(-20, -10)
-                    tile = (bush, bush_rect, 6)
+                    tile = (bush, bush_rect, 8)
                     self.tile_list.append(tile)
                 if tile == 9:
                     brickWall = pg.transform.scale(brickWall_img, (self.tile_size, self.tile_size))
@@ -98,7 +98,7 @@ class World:
                     brickWall_rect.x = column_count * self.tile_size
                     brickWall_rect.y = row_count * self.tile_size
                     brickWall_rect.inflate_ip(-20, -10)
-                    tile = (brickWall, brickWall_rect, 6)
+                    tile = (brickWall, brickWall_rect, 9)
                     self.tile_list.append(tile)
                 if tile == 10:
                     box = pg.transform.scale(box_img, (self.tile_size, self.tile_size))
@@ -106,7 +106,7 @@ class World:
                     box_rect.x = column_count * self.tile_size
                     box_rect.y = row_count * self.tile_size
                     box_rect.inflate_ip(-20, -10)
-                    tile = (box, box_rect, 6)
+                    tile = (box, box_rect, 10)
                     self.tile_list.append(tile)
                 column_count += 1
             row_count += 1

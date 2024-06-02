@@ -147,7 +147,7 @@ class Player:
         # Check for collisions in the x direction
         self.rect.x += dx
         for tile in world.tile_list:
-            if tile[2] == 1 or tile[2] == 5:  # Only check collision with "1" tiles
+            if tile[2] == 1 or tile[2] == 5 or tile[2] == 9 or tile[2] == 10:  # Only check collision with "1" tiles
                 if tile[1].colliderect(self.rect):
                     if dx > 0:  # Moving right
                         self.rect.right = tile[1].left
@@ -158,7 +158,7 @@ class Player:
         self.rect.y += dy
         self.on_ground = False
         for tile in world.tile_list:
-            if tile[2] == 1 or tile[2] == 5:  # Only check collision with "1" tiles
+            if tile[2] == 1 or tile[2] == 5 or tile[2] == 9 or tile[2] == 10:  # Only check collision with "1" tiles
                 if tile[1].colliderect(self.rect):
                     if self.vel_y > 0:  # Falling
                         self.rect.bottom = tile[1].top
