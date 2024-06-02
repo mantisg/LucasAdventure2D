@@ -7,6 +7,7 @@ pygame.init()
 TILE_SIZE = 25
 GRID_WIDTH = 100
 GRID_HEIGHT = 30
+FONT = pygame.font.SysFont('Futura', 24)
 
 # Define screen size
 SCREEN_WIDTH = 1500
@@ -31,8 +32,12 @@ cloud1_img = pygame.image.load('assets/cloud1.png')
 blob_img = pygame.image.load('assets/kenney_platformer-art-deluxe/Extra animations and enemies/Enemy sprites/spider.png')
 platform_x_img = pygame.image.load('assets/kenney_platformer-art-deluxe/Base pack/Tiles/grassHalf.png')
 coin_img = pygame.image.load('assets/kenney_platformer-art-deluxe/Base pack/Items/coinGold.png')
+shroomy_img = pygame.image.load('assets/kenney_platformer-art-deluxe/Mushroom expansion/PNG/tallShroom_red.png')
+bush_img = pygame.image.load('assets/kenney_platformer-art-deluxe/Mushroom expansion/PNG/bush.png')
+brickWall_img = pygame.image.load('assets/kenney_platformer-art-deluxe/Base pack/Tiles/brickWall.png')
+box_img = pygame.image.load('assets/kenney_platformer-art-deluxe/Base pack/Tiles/box.png')
 
-sprites = [None, dirt_img, grass_img, cloud1_img, blob_img, platform_x_img, coin_img]
+sprites = [None, dirt_img, grass_img, cloud1_img, blob_img, platform_x_img, coin_img, shroomy_img, bush_img, brickWall_img, box_img]
 
 # Define initial world data with all zeros
 world_data = [[0 for _ in range(GRID_WIDTH)] for _ in range(GRID_HEIGHT)]
@@ -65,15 +70,22 @@ def draw_sprite_selection():
         x = (i - 1) * TILE_SIZE
         screen.blit(pygame.transform.scale(sprite, (TILE_SIZE, TILE_SIZE)), (x, y_offset))
         pygame.draw.rect(screen, BLACK, (x, y_offset, TILE_SIZE, TILE_SIZE), 1)
+        
+def draw_text(text, font, text_col, x, y):
+	img = font.render(text, True, text_col)
+	screen.blit(img, (x, y))
 
 # Main loop
 running = True
 current_tile = 1
+level = 1
 
 while running:
     screen.fill(BLACK)
     draw_grid()
     draw_sprite_selection()
+    
+    draw_text(f'Level: {level}', FONT, WHITE, TILE_SIZE, SCREEN_HEIGHT - 60)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -82,12 +94,16 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_s:
                 # Save the world data to a file
-                with open('world_data.json', 'w') as f:
+                with open(F'world_data{level}.json', 'w') as f:
                     json.dump(world_data, f)
             elif event.key == pygame.K_l:
                 # Load the world data from a file
-                with open('world_data.json', 'r') as f:
+                with open(f'world_data{level}.json', 'r') as f:
                     world_data = json.load(f)
+            elif event.key == pygame.K_UP:
+                level += 1
+            elif event.key == pygame.K_DOWN and level > 1:
+                level -= 1
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()  # Update mouse position here
