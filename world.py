@@ -1,9 +1,11 @@
 import pygame as pg
+from item import Item
 import random
 
 class World:
     def __init__(self, data):
         self.tile_list = []
+        self.item_list = []
         self.tile_size = 100
 
         dirt_img = pg.image.load('assets/luca_dirt.png')
@@ -74,8 +76,8 @@ class World:
                     coin_rect.x = column_count * self.tile_size
                     coin_rect.y = row_count * self.tile_size
                     coin_rect.inflate_ip(-20, -10)
-                    tile = (coin, coin_rect, 6)
-                    self.tile_list.append(tile)
+                    item = Item(coin, coin_rect, coin_rect.x, coin_rect.y)
+                    self.item_list.append(item)
                 if tile == 7:
                     shroomy = pg.transform.scale(shroomy_img, (self.tile_size, self.tile_size))
                     shroomy_rect = shroomy.get_rect()
@@ -106,6 +108,8 @@ class World:
                     box_rect.x = column_count * self.tile_size
                     box_rect.y = row_count * self.tile_size
                     box_rect.inflate_ip(-20, -10)
+                    item = Item(box, box_rect, box_rect.x, box_rect.y)
+                    self.item_list.append(item)
                     tile = (box, box_rect, 10)
                     self.tile_list.append(tile)
                 column_count += 1
@@ -115,3 +119,11 @@ class World:
         for tile in self.tile_list:
             if tile[2] != 0:
                 screen.blit(tile[0], camera.apply(tile[1]))
+                
+        for item in self.item_list:
+            screen.blit(item.img, camera.apply(item.img_rect))
+            
+    def coin_collision(self, player_rect):
+        for item in self.item_list[:]:
+            if item.collect_coin(player_rect):
+                self.item_list.remove(item)

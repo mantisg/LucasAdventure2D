@@ -59,6 +59,8 @@ while run:
         player.update(world)
         camera.update(player)
         player.draw(screen, camera)
+                
+        world.coin_collision(player.rect)
 
         for event in pg.event.get():
             if event.type == pg.QUIT:

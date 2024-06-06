@@ -22,6 +22,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="camera.py" />
+    <Compile Include="item.py" />
     <Compile Include="level_editor.py" />
     <Compile Include="level_editor2.py" />
     <Compile Include="level_select.py" />
