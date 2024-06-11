@@ -12,6 +12,7 @@ class Player:
         self.jump_left = []
         self.roll_right = []
         self.roll_left = []
+        self.climb = []
         self.index = 0
         self.counter = 0
         for num in range(1, 9):
@@ -32,6 +33,11 @@ class Player:
             img_roll_left = pg.transform.flip(img_roll_right, True, False)
             self.roll_right.append(img_roll_right)
             self.roll_left.append(img_roll_left)
+        for num in range(1, 5):
+            img_climb = pg.image.load(f'assets/Rogue/Climb/climb{num}.png')
+            img_climb = pg.transform.scale(crop_image(img_climb), (80, 80))
+            img_climb_left = pg.transform.flip(img_climb, True, False)
+            self.climb.append(img_climb)
         self.image = self.run_right[self.index]
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -44,6 +50,7 @@ class Player:
         self.direction = 0
         self.jumping = False
         self.rolling = False
+        self.climbing = False
         self.on_ground = False
 
     def update(self, world):
@@ -52,6 +59,7 @@ class Player:
         run_cooldown = 6
         jump_cooldown = 10
         roll_cooldown = 10
+        climb_cooldown = 6
 
         key = pg.key.get_pressed()
         if key[pg.K_UP] and not self.jumped and self.on_ground:
@@ -70,6 +78,7 @@ class Player:
             self.counter += 1
             self.direction = 1
         if key[pg.K_DOWN] and self.on_ground:
+            pg.key.set_repeat(500)
             self.rolled = True
             self.rolling = True
             self.index = 0
@@ -100,6 +109,16 @@ class Player:
                         self.index = 0
                         self.rolling = False
                     self.image = self.roll_left[self.index]
+        elif self.climbing:
+            self.counter += 1
+            if self.counter > climb_cooldown:
+                self.counter = 0
+                self.index += 1
+                if self.index >= len(self.climb):
+                    self.index = 0
+                self.image = self.climb[self.index]
+            if not key[pg.K_UP]:
+                self.climbing = False
         else:
             # Restore the rect size
             self.rolled = False
@@ -153,6 +172,9 @@ class Player:
                         self.rect.right = tile[1].left
                     if dx < 0:  # Moving left
                         self.rect.left = tile[1].right
+                    if key[pg.K_UP]:
+                        self.climbing = True
+                        dy = -5  # Adjusted climbing speed
         for item in world.item_list:
             if item.id == 2:
                 if item.box_collision(self.rect):
