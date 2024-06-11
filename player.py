@@ -147,18 +147,25 @@ class Player:
         # Check for collisions in the x direction
         self.rect.x += dx
         for tile in world.tile_list:
-            if tile[2] == 1 or tile[2] == 5 or tile[2] == 9 or tile[2] == 10:  # Only check collision with "1" tiles
+            if tile[2] == 1 or tile[2] == 5 or tile[2] == 9:
                 if tile[1].colliderect(self.rect):
                     if dx > 0:  # Moving right
                         self.rect.right = tile[1].left
                     if dx < 0:  # Moving left
                         self.rect.left = tile[1].right
+        for item in world.item_list:
+            if item.id == 2:
+                if item.box_collision(self.rect):
+                    if dx > 0:  # Moving right
+                        self.rect.right = item.img_rect.left
+                    if dx < 0:  # Moving left
+                        self.rect.left = item.img_rect.right
 
         # Check for collisions in the y direction
         self.rect.y += dy
         self.on_ground = False
         for tile in world.tile_list:
-            if tile[2] == 1 or tile[2] == 5 or tile[2] == 9 or tile[2] == 10:  # Only check collision with "1" tiles
+            if tile[2] == 1 or tile[2] == 5 or tile[2] == 9:
                 if tile[1].colliderect(self.rect):
                     if self.vel_y > 0:  # Falling
                         self.rect.bottom = tile[1].top
@@ -166,6 +173,16 @@ class Player:
                         self.on_ground = True
                     elif self.vel_y < 0:  # Jumping
                         self.rect.top = tile[1].bottom
+                        self.vel_y = 0
+        for item in world.item_list:
+            if item.id == 2:
+                if item.box_collision(self.rect):
+                    if self.vel_y > 0:  # Falling
+                        self.rect.bottom = item.img_rect.top
+                        self.vel_y = 0
+                        self.on_ground = True
+                    elif self.vel_y < 0:  # Jumping
+                        self.rect.top = item.img_rect.bottom
                         self.vel_y = 0
 
     def draw(self, screen, camera):

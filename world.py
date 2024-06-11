@@ -76,7 +76,7 @@ class World:
                     coin_rect.x = column_count * self.tile_size
                     coin_rect.y = row_count * self.tile_size
                     coin_rect.inflate_ip(-20, -10)
-                    item = Item(coin, coin_rect, coin_rect.x, coin_rect.y)
+                    item = Item(coin, coin_rect, coin_rect.x, coin_rect.y, 1)
                     self.item_list.append(item)
                 if tile == 7:
                     shroomy = pg.transform.scale(shroomy_img, (self.tile_size, self.tile_size))
@@ -108,10 +108,10 @@ class World:
                     box_rect.x = column_count * self.tile_size
                     box_rect.y = row_count * self.tile_size
                     box_rect.inflate_ip(-20, -10)
-                    item = Item(box, box_rect, box_rect.x, box_rect.y)
+                    item = Item(box, box_rect, box_rect.x, box_rect.y, 2)
                     self.item_list.append(item)
-                    tile = (box, box_rect, 10)
-                    self.tile_list.append(tile)
+                    #tile = (box, box_rect, 10)
+                    #self.tile_list.append(tile)
                 column_count += 1
             row_count += 1
 
@@ -125,5 +125,6 @@ class World:
             
     def coin_collision(self, player_rect):
         for item in self.item_list[:]:
-            if item.collect_coin(player_rect):
-                self.item_list.remove(item)
+            if item.id == 1:
+                if item.collect_coin(player_rect):
+                    self.item_list.remove(item)
