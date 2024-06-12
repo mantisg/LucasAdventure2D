@@ -123,8 +123,10 @@ class World:
         for item in self.item_list:
             screen.blit(item.img, camera.apply(item.img_rect))
             
-    def coin_collision(self, player_rect):
+    def coin_collision(self, player, player_rect):
         for item in self.item_list[:]:
             if item.id == 1:
                 if item.collect_coin(player_rect):
                     self.item_list.remove(item)
+                    player.collected_coins.append(item)
+                    print(player.collected_coins)

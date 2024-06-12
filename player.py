@@ -13,6 +13,7 @@ class Player:
         self.roll_right = []
         self.roll_left = []
         self.climb = []
+        self.collected_coins = []
         self.index = 0
         self.counter = 0
         for num in range(1, 9):
@@ -166,13 +167,14 @@ class Player:
         # Check for collisions in the x direction
         self.rect.x += dx
         for tile in world.tile_list:
-            if tile[2] == 1 or tile[2] == 5 or tile[2] == 9:
+            if tile[2] in {1, 5, 9}:
                 if tile[1].colliderect(self.rect):
                     if dx > 0:  # Moving right
                         self.rect.right = tile[1].left
                     if dx < 0:  # Moving left
                         self.rect.left = tile[1].right
-                    if key[pg.K_UP]:
+                    # Start climbing if colliding with brick wall (tile type 9)
+                    if tile[2] == 9 and key[pg.K_UP] and len(self.collected_coins) > 0:
                         self.climbing = True
                         dy = -5  # Adjusted climbing speed
         for item in world.item_list:
